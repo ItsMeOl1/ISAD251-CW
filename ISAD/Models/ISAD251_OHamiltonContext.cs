@@ -33,7 +33,7 @@ namespace ISAD.Models
             modelBuilder.Entity<OrderDetails>(entity =>
             {
                 entity.HasKey(e => new { e.ProductId, e.OrderId })
-                    .HasName("PK__OrderDet__5835C3576BDD9666");
+                    .HasName("PK__OrderDet__5835C357EB55D157");
 
                 entity.Property(e => e.ProductId).HasColumnName("ProductID");
 
@@ -43,20 +43,18 @@ namespace ISAD.Models
                     .WithMany(p => p.OrderDetails)
                     .HasForeignKey(d => d.OrderId)
                     .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FK__OrderDeta__Order__6E01572D");
+                    .HasConstraintName("FK__OrderDeta__Order__7D439ABD");
 
                 entity.HasOne(d => d.Product)
                     .WithMany(p => p.OrderDetails)
                     .HasForeignKey(d => d.ProductId)
                     .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FK__OrderDeta__Produ__6D0D32F4");
+                    .HasConstraintName("FK__OrderDeta__Produ__7C4F7684");
             });
 
             modelBuilder.Entity<Orders>(entity =>
             {
-                entity.Property(e => e.Id)
-                    .HasColumnName("ID")
-                    .ValueGeneratedNever();
+                entity.Property(e => e.Id).HasColumnName("ID");
 
                 entity.Property(e => e.Name)
                     .IsRequired()
@@ -66,9 +64,7 @@ namespace ISAD.Models
 
             modelBuilder.Entity<Products>(entity =>
             {
-                entity.Property(e => e.Id)
-                    .HasColumnName("ID")
-                    .ValueGeneratedNever();
+                entity.Property(e => e.Id).HasColumnName("ID");
 
                 entity.Property(e => e.Name)
                     .IsRequired()

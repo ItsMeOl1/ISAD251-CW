@@ -1,41 +1,82 @@
 ﻿@model ISAD.Models.Products
 
+@{ 
+    if(ViewBag.Error != null)
+    {
+        <div class="row card bg-danger text-center">
+            <h4 class=" text-white">@ViewBag.Error</h4>
+        </div>
+    }
+}
 
+<div class="container">
+    <form asp-controller="Order" asp-action="EditOrder" method="post">
+        <div class="row">
+            <div class="col-6">
 
-    <div class="container">
-        <form asp-controller="Order" asp-action="AddToOrder" method="post">
-            <div class="row">
-                <div class="col-6">
-
-                    <h1>Menu</h1>
-                    <select class="custom-select" size="10" asp-for="Id"  name="itemOrdered"
-                            asp-items="(IEnumerable<SelectListItem>)ViewBag.Products">
-                    </select>
-                </div>
-                <div class="col-6">
-                    <h1>Your Order</h1>
-                    <select class="custom-select" size="10"
-                            asp-items="(IEnumerable<SelectListItem>)ViewBag.Ordering">
-                    </select>
-                </div>
+                <h1 class="text-right">Menu</h1>
+                <select class="custom-select" size="10" asp-for="Id" name="itemOrdered"
+                        asp-items="(IEnumerable<SelectListItem>)ViewBag.Products">
+                </select>
             </div>
-            <div class="row">
-                <div class="col-3">
-                    <select class="custom-select"  name="orderQuantity">
-                        <option value="1">1</option>
-                        <option value="2">2</option>
-                        <option value="3">3</option>
-                        <option value="4">4</option>
-                        <option value="5">5</option>
-                        <option value="6">6</option>
-                        <option value="7">7</option>
-                        <option value="8">8</option>
-                        <option value="9">9</option>
-                    </select>
-                </div>
-                <div class="col-3">
-                    <input class="btn btn-outline-primary" type="submit" value="Add to order">
-                </div>
+            <div class="col-6">
+                <h1>Your Order</h1>
+                <select class="custom-select" size="10" asp-for="Id" name="itemSelected"
+                        asp-items="(IEnumerable<SelectListItem>)ViewBag.Ordering">
+                </select>
             </div>
-        </form>
-    </div>
+        </div>
+        <div class="row">
+            <div class="col-1">
+                <p>Quantity</p>
+            </div>
+            <div class="col-2">
+                <select class="custom-select" name="orderQuantity">
+                    <option value="1">1</option>
+                    <option value="2">2</option>
+                    <option value="3">3</option>
+                    <option value="4">4</option>
+                    <option value="5">5</option>
+                    <option value="6">6</option>
+                    <option value="7">7</option>
+                    <option value="8">8</option>
+                    <option value="9">9</option>
+                </select>
+            </div>
+            <div class="col-3">
+                <input class="btn btn-outline-primary" type="submit" value="Add to order" name="Add">
+            </div>
+            <div class="col-6">
+                <input class="btn btn-outline-primary" type="submit" value="Remove from order" name="Remove">
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-12">
+                @{
+                    if (ViewBag.price != null && ViewBag.price != 0)
+                    {
+                                <h4 class="text-center">@string.Format("{0:c}", ViewBag.Price)</h4>
+                    }
+                }
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-4"></div>
+            <div class="input-group input-group-sm mb-3 col-4">
+                <div class="input-group-prepend">
+                    <span class="input-group-text" id="inputGroup-sizing-sm">Table Number</span>
+                </div>
+                <input type="text" class="form-control" name="table">
+            </div>
+            <div class="col-4"></div>
+        </div>
+
+        <div class="row">
+            <div class="col-4"></div>
+            <div class="col-4 text-center">
+                <input type="button" class="btn btn-primary" name="Order" type="submit" value="Order">
+            </div>
+            <div class="col-4"></div>
+        </div>
+    </form>
+</div>

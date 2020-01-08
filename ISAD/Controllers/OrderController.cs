@@ -72,6 +72,54 @@ namespace ISAD.Controllers
                     ViewBag.Error = "Please select something to remove and try again";
                 }
             }
+            else if (Request.Form.Keys.Contains("Order"))
+            {
+                if (OrderingList.Count > 0 && Request.Form.Keys.Contains("name") && Request.Form.Keys.Contains("table"))
+                {
+                    _context.Database.ExecuteSqlRaw("EXEC AddOrder @Name, @TableNumber, @Price",
+                       new SqlParameter("@Name", Request.Form["name"].ToString()),
+                       new SqlParameter("@TableNumber", Int32.Parse(Request.Form["table"])),
+                       new SqlParameter("@Price", price));
+                    var order = _context.Orders.Where(o => o.Name == Request.Form["name"].ToString() && o.TableNumber == Int32.Parse(Request.Form["table"]) && o.TotalPrice == price).FirstOrDefault();
+                    int ID = order.Id;
+                    List<int> types = new List<int> { };
+                    List<int> quantities = new List<int> { };
+                    foreach (SelectListItem item in OrderingList)
+                    {
+                        int id = Int32.Parse(item.Value);
+                        if (types.Contains(id))
+                        {
+                            quantities[types.IndexOf(id)]++;
+                        }
+                        else
+                        {
+                            types.Add(id);
+                            quantities.Add(1);
+                        }
+                    }
+
+                    for (int i = 0; i < types.Count; i++)
+                    {
+                        var something = _context.Database.ExecuteSqlRaw("EXEC AddDetails @OrderID, @ProductID, @Quantity",
+                            new SqlParameter("@OrderID", ID),
+                            new SqlParameter("@ProductID", types[i]),
+                            new SqlParameter("@Quantity", quantities[i]));
+                    }
+                    
+                }
+                else if (OrderingList.Count < 0)
+                {
+                    ViewBag.Error = "Please make sure you have selected something you wish to order";
+                }
+                else if (!Request.Form.Keys.Contains("name"))
+                {
+                    ViewBag.Error = "Please make sure you have entered your name";
+                }
+                else
+                {
+                    ViewBag.Error = "Please make sure you have entered your table number";
+                }
+            }
 
             ViewBag.Price = price;
             ViewBag.Products = ProductList;

@@ -33,7 +33,7 @@ namespace ISAD.Models
             modelBuilder.Entity<OrderDetails>(entity =>
             {
                 entity.HasKey(e => new { e.ProductId, e.OrderId })
-                    .HasName("PK__OrderDet__5835C357EB55D157");
+                    .HasName("PK__OrderDet__5835C357E7E2EE52");
 
                 entity.Property(e => e.ProductId).HasColumnName("ProductID");
 
@@ -43,13 +43,13 @@ namespace ISAD.Models
                     .WithMany(p => p.OrderDetails)
                     .HasForeignKey(d => d.OrderId)
                     .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FK__OrderDeta__Order__7D439ABD");
+                    .HasConstraintName("FK__OrderDeta__Order__04E4BC85");
 
                 entity.HasOne(d => d.Product)
                     .WithMany(p => p.OrderDetails)
                     .HasForeignKey(d => d.ProductId)
                     .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FK__OrderDeta__Produ__7C4F7684");
+                    .HasConstraintName("FK__OrderDeta__Produ__03F0984C");
             });
 
             modelBuilder.Entity<Orders>(entity =>

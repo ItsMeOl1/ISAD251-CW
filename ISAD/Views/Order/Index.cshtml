@@ -55,7 +55,7 @@
                 @{
                     if (ViewBag.price != null && ViewBag.price != 0)
                     {
-                                <h4 class="text-center">@string.Format("{0:c}", ViewBag.Price)</h4>
+                        <h4 class="text-center">@string.Format("{0:c}", ViewBag.Price)</h4>
                     }
                 }
             </div>
@@ -70,11 +70,20 @@
             </div>
             <div class="col-4"></div>
         </div>
-
+        <div class="row">
+            <div class="col-4"></div>
+            <div class="input-group input-group-sm mb-3 col-4">
+                <div class="input-group-prepend">
+                    <span class="input-group-text" id="inputGroup-sizing-sm">Name</span>
+                </div>
+                <input type="text" class="form-control" name="name">
+            </div>
+            <div class="col-4"></div>
+        </div>
         <div class="row">
             <div class="col-4"></div>
             <div class="col-4 text-center">
-                <input type="button" class="btn btn-primary" name="Order" type="submit" value="Order">
+                <input class="btn btn-primary" name="Order" type="submit" value="Order">
             </div>
             <div class="col-4"></div>
         </div>

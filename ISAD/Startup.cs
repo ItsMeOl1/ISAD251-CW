@@ -8,6 +8,8 @@ using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using ISAD.Models;
+using Microsoft.EntityFrameworkCore;
 
 namespace ISAD
 {
@@ -24,6 +26,9 @@ namespace ISAD
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllersWithViews();
+
+            services.AddDbContext<ISAD251_OHamiltonContext>(options =>
+            options.UseSqlServer(Configuration.GetConnectionString("ISAD251_DB")));
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

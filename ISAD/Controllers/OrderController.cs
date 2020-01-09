@@ -28,6 +28,7 @@ namespace ISAD.Controllers
     }
         public IActionResult Index()
         {
+            ViewBag.Ordering = OrderingList;
             ViewBag.Products = ProductList;
             return View();
         }
@@ -74,7 +75,7 @@ namespace ISAD.Controllers
             }
             else if (Request.Form.Keys.Contains("Order"))
             {
-                if (OrderingList.Count > 0 && Request.Form.Keys.Contains("name") && Request.Form.Keys.Contains("table"))
+                if (OrderingList.Count > 0 && Request.Form["name"] != "" && Request.Form["table"] != "")
                 {
                     _context.Database.ExecuteSqlRaw("EXEC AddOrder @Name, @TableNumber, @Price",
                        new SqlParameter("@Name", Request.Form["name"].ToString()),
@@ -97,7 +98,7 @@ namespace ISAD.Controllers
                             quantities.Add(1);
                         }
                     }
-
+                    //TODO test for quantity
                     for (int i = 0; i < types.Count; i++)
                     {
                         var something = _context.Database.ExecuteSqlRaw("EXEC AddDetails @OrderID, @ProductID, @Quantity",
@@ -105,6 +106,9 @@ namespace ISAD.Controllers
                             new SqlParameter("@ProductID", types[i]),
                             new SqlParameter("@Quantity", quantities[i]));
                     }
+                    ViewBag.Success = true;
+                    OrderingList = new List<SelectListItem> { };
+                    price = 0;
                     
                 }
                 else if (OrderingList.Count < 0)
@@ -124,6 +128,13 @@ namespace ISAD.Controllers
             ViewBag.Price = price;
             ViewBag.Products = ProductList;
             ViewBag.Ordering = OrderingList;
+            return View("Index");
+        }
+
+        public IActionResult ReviewOrder(List<SelectListItem> orderinglist, double p)
+        {
+            OrderingList = orderinglist;
+            price = p;
             return View("Index");
         }
     }

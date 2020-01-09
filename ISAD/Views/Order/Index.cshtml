@@ -1,10 +1,16 @@
 ﻿@model ISAD.Models.Products
 
-@{ 
-    if(ViewBag.Error != null)
+@{
+    if (ViewBag.Error != null)
     {
         <div class="row card bg-danger text-center">
             <h4 class=" text-white">@ViewBag.Error</h4>
+        </div>
+    }
+    if (ViewBag.Success != null)
+    {
+        <div class="row card bg-info text-center">
+            <h4 class=" text-white">Your order has been placed</h4>
         </div>
     }
 }

@@ -1,7 +1,121 @@
-﻿
+﻿@model ISAD.Models.Orders
 
+@{
+    if (ViewBag.Error != null)
+    {
+        <div class="row card bg-danger text-center">
+            <h4 class=" text-white">@ViewBag.Error</h4>
+        </div>
+    }
+    if (ViewBag.Success != null)
+    {
+        <div class="row card bg-info text-center">
+            <h4 class=" text-white">@ViewBag.Success</h4>
+        </div>
+    }
+}
 
-
-
-
-
+<div class="container">
+    <form asp-controller="Admin" asp-action="ChangeItem" method="post">
+        <div class="row">
+            <div class="col-6">
+                <h1 class="text-right">Your orders</h1>
+                <select class="custom-select" size="15" asp-for="Id" name="items" onchange='this.form.submit()'
+                        asp-items="(IEnumerable<SelectListItem>)ViewBag.Items">
+                </select>
+            </div>
+            <div class="col-6">
+                <h1>Details</h1>
+                <div class="input-group input-group-sm mb-3">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text" id="inputGroup-sizing-sm">Product Name</span>
+                    </div>
+                    @{
+                        if (ViewBag.Selected != null)
+                        {
+                            <input type="text" class="form-control" name="name" value="@ViewBag.Selected.Name">
+                        }
+                        else
+                        {
+                            <input type="text" class="form-control" name="name" value="Name">
+                        }
+                    }
+                </div>
+                <div class="input-group input-group-sm mb-3">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text" id="inputGroup-sizing-sm">Description</span>
+                    </div>
+                    @{
+                        if (ViewBag.Selected != null)
+                        {
+                            <input type="text" class="form-control" name="description" value="@ViewBag.Selected.ProductDetails">
+                        }
+                        else
+                        {
+                            <input type="text" class="form-control" name="description" value="Description">
+                        }
+                    }
+                </div>
+                <div class="input-group input-group-sm mb-3">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text" id="inputGroup-sizing-sm">Price</span>
+                    </div>
+                    @{
+                        if (ViewBag.Selected != null)
+                        {
+                            <input type="text" class="form-control" name="price" value=@ViewBag.Selected.Price>
+                        }
+                        else
+                        {
+                            <input type="text" class="form-control" name="price" value="Price">
+                        }
+                    }
+                </div>
+                <div class="input-group input-group-sm mb-3">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text" id="inputGroup-sizing-sm">Quantity in stock</span>
+                    </div>
+                    @{
+                        if (ViewBag.Selected != null)
+                        {
+                            <input type="text" class="form-control" name="quantity" value=@ViewBag.Selected.Quantity>
+                        }
+                        else
+                        {
+                            <input type="text" class="form-control" name="quantity" value="Quantity">
+                        }
+                    }
+                </div>
+                <div class="row">
+                    <div class="col-4">
+                        @{
+                            if (ViewBag.Selected != null)
+                            {
+                                <input class="btn btn-primary" name="save" type="submit" value="Edit @ViewBag.Selected.Name">
+                            }
+                            else
+                            {
+                                <input class="btn btn-primary" name="save" type="submit" value="Edit Product">
+                            }
+                        }
+                    </div>
+                    <div class="col-4">
+                        <input class="btn btn-primary text-center" name="create" type="submit" value="Save as a new product">
+                    </div>
+                    <div class="col-4">
+                        @{
+                            if (ViewBag.Selected != null)
+                            {
+                                <input class="btn btn-primary text-right" name="delete" type="submit" value="Delete @ViewBag.Selected.Name">
+                            }
+                            else
+                            {
+                                <input class="btn btn-primary text-right" name="delete" type="submit" value="Delete Product">
+                            }
+                        }
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>

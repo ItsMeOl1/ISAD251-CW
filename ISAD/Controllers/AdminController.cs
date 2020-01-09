@@ -33,7 +33,7 @@ namespace ISAD.Controllers
             OrderList = new List<SelectListItem> { };
             foreach (Orders i in _context.Orders)
             {
-                OrderList.Add(new SelectListItem
+                OrderList.Add(new SelectListItem    //format all the orders for a htlm select list
                 {
                     Text = "Table " + i.TableNumber + "'s order for " + i.Name + " costing £" + i.TotalPrice,
                     Value = i.Id.ToString()
@@ -44,16 +44,16 @@ namespace ISAD.Controllers
             return View("Orders");
         }
 
-        public IActionResult ChangeSelected()
+        public IActionResult ChangeSelected()   //called from the admin orders page
         {
-            orderDetails = _context.OrderDetails.Where(d => d.OrderId == Int32.Parse(Request.Form["order"])).ToList();
+            orderDetails = _context.OrderDetails.Where(d => d.OrderId == Int32.Parse(Request.Form["order"])).ToList();  //get the selected orders details
             DetailsList = new List<SelectListItem> { };
-            foreach (OrderDetails d in orderDetails)
+            foreach (OrderDetails d in orderDetails)    //put each detail into a list so it can be displayed
             {
                 DetailsList.Add(new SelectListItem { Text = _context.Products.Where(p => p.Id.ToString() == d.ProductId.ToString()).FirstOrDefaultAsync().Result.Name + " x" + d.OrderQuantity });
             }
             OrderList = new List<SelectListItem> { };
-            foreach (Orders i in _context.Orders)
+            foreach (Orders i in _context.Orders) //remake the orders list
             {
                 OrderList.Add(new SelectListItem
                 {
@@ -66,10 +66,10 @@ namespace ISAD.Controllers
             return View("Orders");
         }
 
-        public IActionResult Products()
+        public IActionResult Products() 
         {
             ProductList = new List<SelectListItem> { };
-            foreach (Products p in _context.Products)
+            foreach (Products p in _context.Products)   //get a list of the products
             {
                 ProductList.Add(new SelectListItem { Text = p.Name, Value = p.Id.ToString() });
             }
@@ -77,13 +77,13 @@ namespace ISAD.Controllers
             return View("Products");
         }
 
-        public IActionResult ChangeItem()
+        public IActionResult ChangeItem()   //called from the admin products page
         {
-            if (Request.Form.Keys.Contains("save") && Request.Form["save"] != "")
+            if (Request.Form.Keys.Contains("save") && Request.Form["save"] != "")   //if the save button was clicked
             {
                 if (Request.Form["name"] != "" && Request.Form["price"] != "" && Request.Form["quantity"] != "" && selectedProduct != null)
                 {
-                    _context.Database.ExecuteSqlRaw("EXEC EditProduct @ID, @Name, @Details, @Price, @Quantity",
+                    _context.Database.ExecuteSqlRaw("EXEC EditProduct @ID, @Name, @Details, @Price, @Quantity",     //run the sql to edit the selected product with the given details
                        new SqlParameter("@ID", selectedProduct.Id),
                        new SqlParameter("@Name", Request.Form["name"].ToString()),
                        new SqlParameter("@Details", Request.Form["description"].ToString()),
@@ -96,11 +96,11 @@ namespace ISAD.Controllers
                     ViewBag.Error = "Please make sure you have inputted a name, price and quantity";
                 }
             }
-            else if (Request.Form.Keys.Contains("delete") && Request.Form["delete"] != "")
+            else if (Request.Form.Keys.Contains("delete") && Request.Form["delete"] != "")  //if the delete button was clicked
             {
                 if (Request.Form["name"] != "" && Request.Form["price"] != "" && Request.Form["quantity"] != "" && selectedProduct != null)
                 {
-                    _context.Database.ExecuteSqlRaw("EXEC DeleteProduct @ID",
+                    _context.Database.ExecuteSqlRaw("EXEC DeleteProduct @ID",   //delete the given product with sql
                        new SqlParameter("@ID", selectedProduct.Id));
                     ViewBag.Success = "Changes successfully saved";
                 }
@@ -109,11 +109,11 @@ namespace ISAD.Controllers
                     ViewBag.Error = "Please make sure you have inputted a name, price and quantity";
                 }
             }
-            else if (Request.Form.Keys.Contains("create") && Request.Form["create"] != "")
+            else if (Request.Form.Keys.Contains("create") && Request.Form["create"] != "")  //if the create button was clicked
             {
                 if (Request.Form["name"] != "" && Request.Form["price"] != "" && Request.Form["quantity"] != "" && selectedProduct != null)
-                {
-                    _context.Database.ExecuteSqlRaw("EXEC AddProduct @Name, @Details, @Price, @Quantity",
+                {   
+                    _context.Database.ExecuteSqlRaw("EXEC AddProduct @Name, @Details, @Price, @Quantity",   //add the new item with sql
                       new SqlParameter("@Name", Request.Form["name"].ToString()),
                       new SqlParameter("@Details", Request.Form["description"].ToString()),
                       new SqlParameter("@Price", long.Parse(Request.Form["price"])),

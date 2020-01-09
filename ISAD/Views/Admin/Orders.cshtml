@@ -1,1 +1,20 @@
-﻿
+﻿@model ISAD.Models.Orders
+     
+<div class="container">
+    <form asp-controller="Admin" asp-action="ChangeSelected" method="post">
+        <div class="row">
+            <div class="col-6">
+                <h1 class="text-right">Your orders</h1>
+                <select class="custom-select" size="50" asp-for="Id" name="order" onchange='this.form.submit()'
+                        asp-items="(IEnumerable<SelectListItem>)ViewBag.Orders">
+                </select>
+            </div>
+            <div class="col-6">
+                <h1>Details</h1>
+                <select class="custom-select" size="50"
+                        asp-items="(IEnumerable<SelectListItem>)ViewBag.Details">
+                </select>
+            </div>
+        </div>
+    </form>
+</div>

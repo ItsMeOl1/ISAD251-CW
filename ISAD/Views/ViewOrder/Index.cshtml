@@ -1,0 +1,59 @@
+﻿@model ISAD.Models.Orders
+
+@{
+    if (ViewBag.Error != null)
+    {
+        <div class="row card bg-danger text-center">
+            <h4 class=" text-white">@ViewBag.Error</h4>
+        </div>
+    }
+    if (ViewBag.Success != null)
+    {
+        <div class="row card bg-info text-center">
+            <h4 class=" text-white">Your order has been placed</h4>
+        </div>
+    }
+}
+
+<div class="container">
+    <form asp-controller="ViewOrder" asp-action="EditOrder" method="post">
+        <div class="row">
+            <h3>Table:</h3>
+            <noscript><input type="submit" value="Submit"></noscript>
+            <input type="text" class="form-control" name="table" onchange='this.form.submit()'>
+        </div>
+        <div class="row">
+            <div class="col-6">
+
+                <h1 class="text-right">Your orders</h1>
+                <select class="custom-select" size="10" asp-for="Id" name="order" onchange='this.form.submit()'
+                        asp-items="(IEnumerable<SelectListItem>)ViewBag.Orders">
+                </select>
+            </div>
+            <div class="col-6">
+                @{
+                    if (ViewBag.Selected != null)
+                    {
+                        <h1>@ViewBag.Selected</h1>
+                    }
+                    else
+                    {
+                        <h1>Details</h1>
+                    }
+                }
+                <select class="custom-select" size="10"
+                        asp-items="(IEnumerable<SelectListItem>)ViewBag.Details">
+                </select>
+
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-6 text-right">
+                <input class="btn btn-primary" name="edit" type="submit" value="Edit this order">
+            </div>
+            <div class="col-6">
+                <input class="btn btn-primary" name="delete" type="submit" value="Cancel this order">
+            </div>
+        </div>
+    </form>
+</div>

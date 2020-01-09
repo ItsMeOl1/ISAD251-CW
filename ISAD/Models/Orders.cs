@@ -13,7 +13,7 @@ namespace ISAD.Models
         public int Id { get; set; }
         public string Name { get; set; }
         public int? TableNumber { get; set; }
-        public int? TotalPrice { get; set; }
+        public double? TotalPrice { get; set; }
 
         public virtual ICollection<OrderDetails> OrderDetails { get; set; }
     }

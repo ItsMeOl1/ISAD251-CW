@@ -19,7 +19,7 @@
     <form asp-controller="Admin" asp-action="ChangeItem" method="post">
         <div class="row">
             <div class="col-6">
-                <h1 class="text-right">Your orders</h1>
+                <h1 class="text-right">Your products</h1>
                 <select class="custom-select" size="15" asp-for="Id" name="items" onchange='this.form.submit()'
                         asp-items="(IEnumerable<SelectListItem>)ViewBag.Items">
                 </select>

@@ -67,7 +67,7 @@ namespace ISAD.Controllers
                     DetailsList.Add(new SelectListItem { Text = _context.Products.Where(p => p.Id.ToString() == d.ProductId.ToString()).FirstOrDefaultAsync().Result.Name + " x" + d.OrderQuantity,});
                 }
             }
-            else if (Request.Form.Keys.Contains("remove"))  //if the remove button was clicked
+            else if (Request.Form.Keys.Contains("delete"))  //if the remove button was clicked
             {
                 if (selectedOrderID == "")  //if nothings selected selected
                 {

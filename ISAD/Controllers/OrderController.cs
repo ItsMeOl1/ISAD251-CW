@@ -114,7 +114,7 @@ namespace ISAD.Controllers
                 {
                     ViewBag.Error = "Please make sure you have selected something you wish to order";
                 }
-                else if (!Request.Form.Keys.Contains("name"))
+                else if (Request.Form["name"] == "")
                 {
                     ViewBag.Error = "Please make sure you have entered your name";
                 }

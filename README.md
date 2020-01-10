@@ -1,5 +1,7 @@
 # ISAD251-CW
 
+(YouTube video explaining everything: https://youtu.be/9ssCvWVXAkI )
+
 ![Home Screen](/screenshots/home.png)
 As our front page says, welcome! This is the repository for the Take website.
 Using our simple yet elegantly designed website makes ordering easy.
